@@ -26,6 +26,7 @@ The server will run on port 4100 by default.
 ### Root Endpoint
 
 #### GET /
+
 - This returns welcome message
 - **Response**: HTML welcome page
 
@@ -34,6 +35,7 @@ The server will run on port 4100 by default.
 ## User Endpoints
 
 ### GET /users
+
 - This returns a list of all my users
 - **Response**: I used an array of user objects to show all users
 
@@ -42,26 +44,26 @@ e.g
 ```json
 [
   {
-     "id": "cbd4fccd-568d-4473-bc8e-77868537727c",
-      "firstName": "Marcelle",
-      "lastName": "Hermann",
-      "username": "Martin2"
+    "id": "cbd4fccd-568d-4473-bc8e-77868537727c",
+    "firstName": "Marcelle",
+    "lastName": "Hermann",
+    "username": "Martin2"
   }
 ]
 ```
 
 ### GET /users/:id
+
 - This returns a single user by ID
 - **Parameters**: `id` (string) which is the User ID
 - **Response**: User object
 
 ### POST /users
+
 - This creates a new user
 - **Request Body**:
 
 i used this for users
-
-
 
 ```json
 {
@@ -74,15 +76,12 @@ i used this for users
 }
 ```
 
-
 i used this for posts
-
-
 
 ```json
 {
   {
-  
+
     "title": "{{$randomLoremSentence}}",
     "content": "{{$randomLoremParagraph}}",
     "authorId": "cbd4fccd-568d-4473-bc8e-77868537727c"
@@ -91,8 +90,6 @@ i used this for posts
 
 ```
 
-
-
 - **Response**: Created user object
 
 ---
@@ -100,57 +97,66 @@ i used this for posts
 ## Post Endpoints
 
 ### GET /posts
+
 - Returns a list of all non-deleted posts with author information
 - **Response**: Array of post objects with embedded author data
 
 ```json
 [
   {
-    "id": "uuid",
-    "title": "My First Post",
-    "content": "This is the content of my post",
-    "createdAt": "2024-01-01T00:00:00Z",
-    "lastUpdated": "2024-01-01T00:00:00Z",
+    "id": "05038951-5492-4d19-b669-9a3a559805ba",
+    "title": "Quia qui magni excepturi rerum aut consectetur natus ullam rerum.",
+    "content": "Debitis repellendus minima cumque exercitationem iste non quia laudantium. Dolorum quo eligendi est praesentium omnis dicta odit omnis deserunt. Quia laudantium qui et. Et a omnis eius saepe laudantium neque consequatur nemo. Necessitatibus autem delectus reprehenderit.",
+    "createdAt": "2025-06-16T19:32:59.113Z",
+    "lastUpdated": "2025-06-16T19:32:59.113Z",
     "author": {
-      "id": "uuid",
-      "firstName": "John",
-      "lastName": "Doe",
-      "username": "johndoe"
+      "id": "cbd4fccd-568d-4473-bc8e-77868537727c",
+      "firstName": "Marcelle",
+      "lastName": "Hermann",
+      "username": "Martin2"
     }
   }
 ]
 ```
 
 ### GET /posts/:id
+
 - Returns a single post by ID with author information
 - **Parameters**: `id` (string) - Post ID
 - **Response**: Post object with author data
 
 ### POST /posts
+
 - Creates a new blog post
 - **Request Body**:
+
 ```json
 {
-  "title": "My New Post",
-  "content": "This is the content of my new post",
-  "authorId": "user-uuid-here"
+   "title": "{{$randomLoremSentence}}",
+    "content": "{{$randomLoremParagraph}}",
+    "authorId": "cbd4fccd-568d-4473-bc8e-77868537727c"
 }
 ```
+
 - **Response**: Created post object with author information
 
 ### PUT /posts/:id
+
 - Updates an existing post
 - **Parameters**: `id` (string) - Post ID
 - **Request Body**:
+
 ```json
 {
   "title": "Updated Title",
   "content": "Updated content"
 }
 ```
+
 - **Response**: Updated post object with author information
 
 ### DELETE /posts/:id
+
 - Soft deletes a post (marks as deleted, doesn't remove from database)
 - **Parameters**: `id` (string) - Post ID
 - **Response**: Success message
@@ -166,6 +172,7 @@ i used this for posts
 ## Data Models
 
 ### User
+
 - `id` (String, UUID, Primary Key)
 - `firstName` (String, Required)
 - `lastName` (String, Required)
@@ -173,6 +180,7 @@ i used this for posts
 - `username` (String, Required, Unique)
 
 ### Post
+
 - `id` (String, UUID, Primary Key)
 - `title` (String, Required)
 - `content` (String, Required)
@@ -202,8 +210,6 @@ All endpoints include error handling with appropriate HTTP status codes:
 
 ---
 
-
-
 <br></br>
 
---------------------*HOUSTON, we have a blog API! *-------------------
+--------------------_HOUSTON, we have a blog API! _-------------------

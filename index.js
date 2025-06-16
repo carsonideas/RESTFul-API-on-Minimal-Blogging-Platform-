@@ -1,10 +1,7 @@
-
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 
-
 import { validateMyUser } from "./users.js";
-
 
 import { validateMyPost } from "./posts.js";
 
@@ -20,9 +17,7 @@ app.get("/", (_req, res) => {
   );
 });
 
-
 console.log("HOUSTON, Are we on! Are we ok!!");
-
 
 // my  users  section
 
@@ -33,7 +28,9 @@ app.get("/users", async (_req, res) => {
   } catch {
     res
       .status(500)
-      .json({ message: "HOUSTON! something went wrong fetching users!! noooo!!!!" });
+      .json({
+        message: "HOUSTON! something went wrong fetching users!! noooo!!!!",
+      });
   }
 });
 
@@ -42,25 +39,25 @@ app.get("/users/:id", async (req, res) => {
     const { id } = req.params;
 
     const user = await client.user.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (user) {
-     
       const posts = await client.post.findMany({
         where: {
           authorId: id,
           isDeleted: false,
         },
       });
-      
     } else {
       res.status(404).json({ message: "HOUSTON! User not foundd!! noooo!!!!" });
     }
   } catch {
     res
       .status(500)
-      .json({ message: "HOUSTON! something went wrong fetching user!! noooo!!!!" });
+      .json({
+        message: "HOUSTON! something went wrong fetching user!! noooo!!!!",
+      });
   }
 });
 
@@ -79,13 +76,13 @@ app.post("/users", validateMyUser, async (req, res) => {
 
     res.status(201).json(user);
   } catch (e) {
-    
-      res
-        .status(500)
-        .json({ message: "HOUSTON! something went wrong creating user!! noooo!!!!" });
-    }
+    res
+      .status(500)
+      .json({
+        message: "HOUSTON! something went wrong creating user!! noooo!!!!",
+      });
   }
-);
+});
 
 // my  posts  section
 
@@ -96,20 +93,19 @@ app.post("/users", validateMyUser, async (req, res) => {
 //         isDeleted: false,
 //       }
 //     });
-    
-   
+
 //     const  postsWithMySelectedAuthors = await Promise.all(
 //       posts.map(async (post) => {
 //         const mySelectedAuthor  = await client.user.findUnique({
-//           where: { 
-//             id: post.authorId 
+//           where: {
+//             id: post.authorId
 //         }
 //         });
-        
+
 //         return { ...post, mySelectedAuthor  };
 //       })
 //     );
-    
+
 //     res.status(200).json( postsWithMySelectedAuthors);
 //   } catch {
 //     res
@@ -139,9 +135,9 @@ app.get("/posts", async (_req, res) => {
         where: { id: post.authorId },
       });
 
-      //to solve my issue, i used .push to add the next post to the array so as to display all posts. 
+      //to solve my issue, i used .push to add the next post to the array so as to display all posts.
       // this will allow me to see all the data from the users and then i will add my title ,id,content, created at and updatede at
-      
+
       postsWithMySelectedAuthors.push({
         id: post.id,
         title: post.title,
@@ -165,57 +161,57 @@ app.get("/posts", async (_req, res) => {
   }
 });
 
-
-
 app.get("/posts/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
     const post = await client.post.findUnique({
-      where: { 
-        id 
+      where: {
+        id,
         // as we ssaid in es6 shortforms
-    }
+      },
     });
 
-   
-    const mySelectedAuthor  = await client.user.findUnique({
-      where: { 
-        id: post.authorId 
-    }
+    const mySelectedAuthor = await client.user.findUnique({
+      where: {
+        id: post.authorId,
+      },
     });
-    res.status(200).json({ ...post, mySelectedAuthor  });
+    res.status(200).json({ ...post, mySelectedAuthor });
   } catch (e) {
-    res.status(500).json({ message: "HOUSTON! something went wrong fetching posts!! noooo!!!!" });
+    res
+      .status(500)
+      .json({
+        message: "HOUSTON! something went wrong fetching posts!! noooo!!!!",
+      });
   }
 });
-
 
 app.post("/posts", validateMyPost, async (req, res) => {
   try {
     const { title, content, authorId } = req.body;
 
-    const mySelectedAuthor  = await client.user.findUnique({
+    const mySelectedAuthor = await client.user.findUnique({
       where: { id: authorId },
     });
-
 
     const post = await client.post.create({
       data: {
         title,
         content,
         authorId,
-      }
+      },
     });
 
-    const postWithMySelectedAuthor = { ...post, mySelectedAuthor  };
+    const postWithMySelectedAuthor = { ...post, mySelectedAuthor };
 
     res.status(201).json(postWithMySelectedAuthor);
-
   } catch {
     res
       .status(500)
-      .json({ message: "HOUSTON! something went wrong creating post!! noooo!!!!" });
+      .json({
+        message: "HOUSTON! something went wrong creating post!! noooo!!!!",
+      });
   }
 });
 
@@ -225,30 +221,29 @@ app.put("/posts/:id", validateMyPost, async (req, res) => {
 
     const { id } = req.params;
 
-    const postWithMySelectedAuthor = { ...post, mySelectedAuthor  };
+    const postWithMySelectedAuthor = { ...post, mySelectedAuthor };
 
     const post = await client.post.update({
       where: { id },
-      data: { 
+      data: {
         title,
         content,
-      }
+      },
     });
 
-   
-    const mySelectedAuthor  = await client.user.findUnique({
-      where: { 
-        id: post.authorId 
-    }
+    const mySelectedAuthor = await client.user.findUnique({
+      where: {
+        id: post.authorId,
+      },
     });
-    
-    
+
     res.status(200).json(postWithMySelectedAuthor);
-
   } catch {
     res
       .status(500)
-      .json({ message: "HOUSTON! something went wrong updating post!! noooo!!!!" });
+      .json({
+        message: "HOUSTON! something went wrong updating post!! noooo!!!!",
+      });
   }
 });
 
@@ -269,7 +264,9 @@ app.delete("/posts/:id", async (req, res) => {
   } catch {
     res
       .status(500)
-      .json({ message: "HOUSTON! something went wrong deleting post!! noooo!!!!" });
+      .json({
+        message: "HOUSTON! something went wrong deleting post!! noooo!!!!",
+      });
   }
 });
 
