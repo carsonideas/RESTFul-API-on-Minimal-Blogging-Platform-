@@ -84,41 +84,13 @@ app.post("/users", validateMyUser, async (req, res) => {
   }
 });
 
-// my  posts  section
 
-app.get("/posts", async (req, res) => {
-  try {
-    const posts = await client.post.findMany({
-      where: {
-        isDeleted: false,
-      }
-    });
-
-    const  postsWithMySelectedAuthors = await Promise.all(
-      posts.map(async (post) => {
-        const mySelectedAuthor  = await client.user.findUnique({
-          where: {
-            id: post.authorId
-        }
-        });
-
-        return { ...post, mySelectedAuthor  };
-      })
-    );
-
-    res.status(200).json( postsWithMySelectedAuthors);
-  } catch {
-    res
-      .status(500)
-      .json({ message: "HOUSTON! something went wrong fetching posts!! noooo!!!!" });
-  }
-});
 
 app.get("/posts", async (_req, res) => {
   try {
     const posts = await client.post.findMany({
       where: {
-        isDeleted: false,
+        isDeleted: true,
       },
     });
 
@@ -144,6 +116,7 @@ app.get("/posts", async (_req, res) => {
         content: post.content,
         createdAt: post.createdAt,
         lastUpdated: post.lastUpdated,
+        
         author: {
           id: author.id,
           firstName: author.firstName,
