@@ -2,6 +2,26 @@
 
 This is a simple blog API built with Express.js, Prisma ORM, and PostgreSQLwhich allows me to manage users and blog posts with full CRUD operations.
 
+you can access it at
+```
+https://restful-api-on-minimal-blogging-platform-8s72.onrender.com/
+
+```
+
+you can access the `users` at
+
+```
+https://restful-api-on-minimal-blogging-platform-8s72.onrender.com/users/
+
+```
+
+you can access the `posts` at
+
+```
+https://restful-api-on-minimal-blogging-platform-8s72.onrender.com/posts/
+
+```
+
 ## Technologies Used
 
 - **Express.js** for my web framework for Node.js
