@@ -96,6 +96,8 @@ i used this for users
 }
 ```
 
+![how user look like](image-1.png)
+
 i used this for posts
 
 ```json
@@ -111,6 +113,8 @@ i used this for posts
 ```
 
 - **Response**: Created user object
+
+![post how it looks](image.png)
 
 ---
 
