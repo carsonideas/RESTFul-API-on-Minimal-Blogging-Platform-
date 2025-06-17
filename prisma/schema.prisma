@@ -26,5 +26,5 @@ model Post {
   lastUpdated DateTime @updatedAt
   isDeleted   Boolean  @default(false)
   authorId    String @map("author_identity")
-  
+  author      String
 }

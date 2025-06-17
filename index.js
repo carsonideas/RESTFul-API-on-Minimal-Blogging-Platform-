@@ -84,13 +84,45 @@ app.post("/users", validateMyUser, async (req, res) => {
   }
 });
 
+//my  posts  section
+
+// app.get("/posts", async (req, res) => {
+//   try {
+//     const posts = await client.post.findMany({
+//       where: {
+//         isDeleted: false,
+//       }
+//     });
+
+//     const  postsWithMySelectedAuthors = await Promise.all(
+//       posts.map(async (post) => {
+//         const mySelectedAuthor  = await client.user.findUnique({
+//           where: {
+//             id: post.authorId
+//         }
+//         });
+
+//         return { ...post, mySelectedAuthor  };
+//       })
+//     );
+
+//     res.status(200).json( postsWithMySelectedAuthors);
+//   } catch {
+//     res
+//       .status(500)
+//       .json({ message: "HOUSTON! something went wrong fetching posts!! noooo!!!!" });
+//   }
+// });
+
+
+// one must specifciy the path, its nagging !!
 
 
 app.get("/posts", async (_req, res) => {
   try {
     const posts = await client.post.findMany({
       where: {
-        isDeleted: true,
+        isDeleted: false,
       },
     });
 
@@ -107,7 +139,7 @@ app.get("/posts", async (_req, res) => {
         where: { id: post.authorId },
       });
 
-      //to solve my issue, i used .push to add the next post to the array so as to display all posts.
+      //to solve my issue, i use .push to add the next post to the array so as to display all posts.
       // this will allow me to see all the data from the users and then i will add my title ,id,content, created at and updatede at
 
       postsWithMySelectedAuthors.push({
